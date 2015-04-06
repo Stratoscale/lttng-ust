@@ -44,7 +44,7 @@ static int _get_max_possible_cpu_id(void)
 		return -1;
 	}
 
-	for (;;) 
+	for (;;)
 	{
 		char sep;
 		int cpu;
@@ -74,9 +74,9 @@ void _get_num_possible_cpus(void)
  	 * _SC_NPROCESSORS_CONF returns the total number of configured processors, and as a result
  	 * getcpu() could return a value greater than sysconf(_SC_NPROCESSORS_CONF). This happends in case the missing processor is not the last one.
  	 * therefore , we need to find the maximum defined processor, and not the number of processors defined.
- 	 */	
+ 	 */
 	result = _get_max_possible_cpu_id();
 	if (result == -1)
 		return;
-	__num_possible_cpus = result;
+	__num_possible_cpus = result + 1;
 }
