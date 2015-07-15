@@ -9,6 +9,9 @@ all: $(ROOTFS)
 submit:
 	solvent submitproduct rpms $(RPM_OUTPUT_DIR)
 
+approve:
+	solvent approve --product=rpms
+
 clean:
 	sudo rm -rf build/rootfs*
 
