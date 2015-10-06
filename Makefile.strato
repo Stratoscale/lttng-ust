@@ -2,6 +2,8 @@ RPMS_TO_INSTALL =  libuuid-devel systemtap-sdt-devel libtool texinfo http://pack
 
 ROOTFS = build/rootfs
 
+SRC_TAR = ./lttng-ust-2.6.2.tar.bz2
+
 RPM_OUTPUT_DIR = $(ROOTFS)/output_rpms
 
 all: $(ROOTFS)
@@ -13,7 +15,7 @@ approve:
 	solvent approve --product=rpms
 
 clean:
-	sudo rm -rf build/rootfs*
+	sudo rm -rf build/rootfs* $SRC_TAR
 
 $(ROOTFS):
 	echo "Building lttng-ust"
@@ -26,8 +28,8 @@ $(ROOTFS):
 	$(Q) sudo chroot $@ rm -fr /root/rpmbuild
 	$(Q) sudo chroot $@ mkdir -p /root/rpmbuild/SOURCES
 	$(Q) sudo chroot $@ mkdir -p /root/rpmbuild/SPECS
-	$(Q) git archive --format=tar --prefix=lttng-ust/ HEAD | sudo sh -c 'bzip2 -1c > ./lttng-ust-2.6.2.tar.bz2'
-	$(Q) sudo cp ./lttng-ust-2.6.2.tar.bz2 $@/root/rpmbuild/SOURCES
+	$(Q) git archive --format=tar --prefix=lttng-ust/ HEAD | sudo sh -c "bzip2 -1c > $SRC_TAR"
+	$(Q) sudo cp $SRC_TAR $@/root/rpmbuild/SOURCES
 	$(Q) sudo cp lttng-ust.spec $@/root/rpmbuild/SPECS/lttng-ust.spec
 	$(Q) sudo chroot $@ chown root.root /root/rpmbuild/SPECS/lttng-ust.spec
 	$(Q) sudo cp lttng-ust-build.sh $@ 
