@@ -8,7 +8,6 @@ Group:          Development/Libraries
 License:        LGPLv2.1, MIT and GPLv2
 URL:            http://www.lttng.org/ust
 Source0:        http://lttng.org/files/lttng-ust/%{name}-%{version}.tar.bz2
-#BuildRequires:  libtool, autoconf, automake, pkgconfig, liburcu-devel >= 0.8.4, java-1.7.0-openjdk-devel
 BuildRequires:  libtool, autoconf, automake, pkgconfig, liburcu-devel >= 0.8.4
 
 %description
@@ -25,7 +24,6 @@ The %{name}-devel package contains libraries and header to instrument applicatio
 %package        java
 Summary:        Development files for %{name} JUL support
 Group:          Development/Libraries
-#Requires:       %{name}%{?_isa} = %{version}-%{release}, java-1.7.0-openjdk
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    java
@@ -35,7 +33,6 @@ The %{name}-java package contains libraries and class files needed to instrument
 %setup -q
 
 %build
-#%configure --disable-static --docdir=%{_docdir}/%{name} --enable-jni-interface --enable-java-agent-jul --with-java-jdk=${JAVA_SDK_PATH}
 %configure --disable-static --docdir=%{_docdir}/%{name}  --disable-java-agent-all
 V=1 make %{?_smp_mflags}
 
