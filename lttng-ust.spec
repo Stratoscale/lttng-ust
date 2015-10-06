@@ -24,7 +24,7 @@ The %{name}-devel package contains libraries and header to instrument applicatio
 %package        java
 Summary:        Development files for %{name} JUL support
 Group:          Development/Libraries
-Requires:       %{name}%{?_isa} = %{version}-%{release}, java-1.7.0-openjdk
+Requires:       %{name}%{?_isa} = %{version}-%{release}#, java-1.7.0-openjdk
 
 %description    java
 The %{name}-java package contains libraries and class files needed to instrument applications that use %{name}'s Java Util Logging backend.
@@ -33,7 +33,8 @@ The %{name}-java package contains libraries and class files needed to instrument
 %setup -q
 
 %build
-%configure --disable-static --docdir=%{_docdir}/%{name} --enable-jni-interface --enable-java-agent-jul --with-java-jdk=${JAVA_SDK_PATH}
+#%configure --disable-static --docdir=%{_docdir}/%{name} --enable-jni-interface --enable-java-agent-jul --with-java-jdk=${JAVA_SDK_PATH}
+%configure --disable-static --docdir=%{_docdir}/%{name}  --disable-java-agent-all
 V=1 make %{?_smp_mflags}
 
 %install
@@ -80,12 +81,12 @@ rm -vf $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_defaultdocdir}/%{name}/examples/demo-tracef/*
 %{_bindir}/lttng-gen-tp
 
-%files java
-%{_defaultdocdir}/%{name}/java-agent.txt
-%{_defaultdocdir}/%{name}/examples/java-jul/*
-%{_datadir}/java/*
-%{_libdir}/liblttng-ust-jul-jni.so*
-%{_libdir}/liblttng-ust-java.so*
+#%files java
+#%{_defaultdocdir}/%{name}/java-agent.txt
+#%{_defaultdocdir}/%{name}/examples/java-jul/*
+#%{_datadir}/java/*
+#%{_libdir}/liblttng-ust-jul-jni.so*
+#%{_libdir}/liblttng-ust-java.so*
 
 %changelog
 * Mon Jun 22 2015 Michael Jeanson <mjeanson@efficios.com> 2.6.2-1
