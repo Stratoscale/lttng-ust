@@ -28,6 +28,9 @@ config.status
 stamp-h1
 libtool
 lttng-ust.pc
+**/RCS/*
+build/
+lttng-ust-2.6.2.tar.bz2
 
 ustctl/ustctl
 ust-consumerd/ust-consumerd
