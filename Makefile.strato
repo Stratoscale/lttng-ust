@@ -1,0 +1,30 @@
+RPMS_TO_INSTALL = libuuid-devel systemtap-sdt-devel libtool texinfo userspace-rcu-devel
+
+ROOTFS = build/rootfs
+
+RPM_OUTPUT_DIR = $(ROOTFS)/output_rpms
+
+all: $(ROOTFS)
+
+submit:
+	solvent submitproduct rpms $(RPM_OUTPUT_DIR)
+
+clean:
+	sudo rm -rf build/rootfs*
+
+$(ROOTFS):
+	echo "Building lttng-ust"
+	$(Q) sudo rm -fr $@
+	$(Q) mkdir -p $@
+	$(Q) sudo solvent bring --repositoryBasename=rootfs-clean-build --product=rootfs --destination=$@
+	$(Q) mkdir -p $@/output_rpms
+	$(Q) sudo ./chroot.sh $(ROOTFS) yum install $(RPMS_TO_INSTALL) --assumeyes
+	$(Q) sudo chroot $@ rm -fr /root/rpmbuild
+	$(Q) sudo chroot $@ mkdir -p /root/rpmbuild/SOURCES
+	$(Q) sudo chroot $@ mkdir -p /root/rpmbuild/SPECS
+	$(Q) git archive --format=tar --prefix=lttng-ust/ HEAD | sudo sh -c 'gzip -1c > ./lttng-ust.tar.gz'
+	$(Q) sudo cp ./lttng-ust.tar.gz $@/root/rpmbuild/SOURCES
+	$(Q) sudo cp lttng-ust.spec $@/root/rpmbuild/SPECS/lttng-ust.spec
+	$(Q) sudo chroot $@ chown root.root /root/rpmbuild/SPECS/lttng-ust.spec
+	$(Q) sudo cp lttng-ust-build.sh $@ 
+	$(Q) sudo chroot $@ ./lttng-ust-build.sh
