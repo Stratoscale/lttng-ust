@@ -25,7 +25,7 @@ $(ROOTFS):
 	$(Q) sudo chroot $@ rm -fr /root/rpmbuild
 	$(Q) sudo chroot $@ mkdir -p /root/rpmbuild/SOURCES
 	$(Q) sudo chroot $@ mkdir -p /root/rpmbuild/SPECS
-	$(Q) git archive --format=tar --prefix=lttng-ust/ HEAD | sudo sh -c 'gzip -1c > ./lttng-ust.tar.gz'
+	$(Q) git archive --format=tar --prefix=lttng-ust/ HEAD | sudo sh -c 'bzip2 -1c > ./lttng-ust-2.6.2.tar.bz2'
 	$(Q) sudo cp ./lttng-ust.tar.gz $@/root/rpmbuild/SOURCES
 	$(Q) sudo cp lttng-ust.spec $@/root/rpmbuild/SPECS/lttng-ust.spec
 	$(Q) sudo chroot $@ chown root.root /root/rpmbuild/SPECS/lttng-ust.spec
