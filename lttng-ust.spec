@@ -80,8 +80,8 @@ rm -vf $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_defaultdocdir}/%{name}/examples/demo-tracef/*
 %{_bindir}/lttng-gen-tp
 
-#%files java
-#%{_defaultdocdir}/%{name}/java-agent.txt
+%files java
+%{_defaultdocdir}/%{name}/java-agent.txt
 #%{_defaultdocdir}/%{name}/examples/java-jul/*
 #%{_datadir}/java/*
 #%{_libdir}/liblttng-ust-jul-jni.so*
