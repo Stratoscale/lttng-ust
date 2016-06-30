@@ -86,3 +86,6 @@ python-lttngust/lttngust/__init__.py
 python-lttngust/**/*.pyc
 python-lttngust/build
 python-lttngust/setup.py
+
+build/
+*.tar.bz2
