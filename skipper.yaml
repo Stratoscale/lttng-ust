@@ -1,0 +1,6 @@
+registry: rackattack-nas.dc1:5000
+build-container-image: lttng-build
+build-container-tag: 31822caa7a5992e2fdc11fe494950dce97117d78
+
+make:
+        makefile: Makefile.strato
